@@ -1,0 +1,25 @@
+services:
+  btp-a2a-dispute-resolution:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: btp-a2a-dispute-resolution
+    ports:
+      - "4004:4004"
+      - "8080:8080"
+      - "4040:4040"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/agent-catalog/node_modules
+      - /app/agents/sap-agent-builder-a2a/agent-builder-a2a-agent-connector/node_modules
+      - /app/agents/sap-agent-builder-a2a/agent-builder-a2a-agent-connector/app/router/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=4004
+    working_dir: /app/agent-catalog
+    command: bash     # Launch bash instead of starting the app
+    stdin_open: true
+    tty: true
+    networks:
+      - a2a-network

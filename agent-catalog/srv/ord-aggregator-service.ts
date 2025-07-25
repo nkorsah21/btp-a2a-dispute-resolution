@@ -26,6 +26,7 @@ export default class ORDAggregator extends cds.ApplicationService {
     private readonly log = cds.log("ORDAggregator");
 
     async init(): Promise<void> {
+        console.log('server has been started');
         this.log.info("init ORD aggregator service");
         await super.init();
         this.on("listAgentsCatalog", this.listAgentsCatalog);
@@ -72,6 +73,7 @@ export default class ORDAggregator extends cds.ApplicationService {
     };
 
     private onMetadata = async (request: cds.Request): Promise<MetadataResponse> => {
+        console.log("metadata has been called");
         const payload = request.data as MetadataRequest;
         this.log.info("Payload on Metadata", payload);
 

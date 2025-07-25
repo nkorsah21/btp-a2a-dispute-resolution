@@ -1,3 +1,7 @@
+# To use container 
+docker up -d 
+docker exec -it btp-a2a-dispute-resolution bash (to use container terminal)
+
 # Dispute Resolution with Multi-Agent Orchestration
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/btp-a2a-dispute-resolution)](https://api.reuse.software/info/github.com/SAP-samples/btp-a2a-dispute-resolution)
 

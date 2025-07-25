@@ -1,5 +1,6 @@
 @protocol: ['rest']
 @path    : '/ord-aggregator'
+@impl: './ord-aggregator-service.ts'
 service ORDAggregator {
     // TODO: define custom type for return
     function listAgentsCatalog()                           returns array of {};

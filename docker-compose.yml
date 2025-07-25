@@ -18,8 +18,5 @@ services:
       - NODE_ENV=development
       - PORT=4004
     working_dir: /app/agent-catalog
-    command: bash     # Launch bash instead of starting the app
     stdin_open: true
     tty: true
-    networks:
-      - a2a-network

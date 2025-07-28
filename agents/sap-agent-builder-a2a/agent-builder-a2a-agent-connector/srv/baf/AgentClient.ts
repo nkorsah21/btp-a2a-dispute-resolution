@@ -38,7 +38,8 @@ export class TokenFetching {
             client_secret: clientSecret,
             grant_type: "client_credentials"
         };
-
+        console.log(`\n\n\n token service url ${JSON.stringify(tokenServiceUrl, null, 2)} \n\n`)
+        // console.log(tokenServiceUrl)
         // Fetch token from uaa
         const xsuaaResponseObj = await axios.post<{
             access_token: string;
@@ -64,6 +65,7 @@ export class AgentClient {
     ) {}
 
     public createClient(): AxiosInstance {
+        console.log('creating client!')
         const instance = axios.create({
             baseURL: this.baseUrl,
             timeout: 1000 * 60 * 5

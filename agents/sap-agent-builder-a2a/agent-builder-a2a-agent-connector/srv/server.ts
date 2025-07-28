@@ -16,7 +16,7 @@ cds.on("bootstrap", (app: Express) => {
 });
 
 const vcap = process.env.VCAP_APPLICATION;
-const a2aServerUrl = vcap ? `https://${JSON.parse(vcap).application_uris[0]}/` : "http://localhost:4004/";
+const a2aServerUrl = vcap ? `https://${JSON.parse(vcap).application_uris[0]}/` : "http://localhost:40957/";
 const agentCard = {
     name: "SAP Dispute Resolution Agent",
     description: "Resolve disputes, manage business processes, and analyze data in the cloud",

@@ -9,7 +9,8 @@ export class BAFAgentClient {
 
     constructor() {
         const baf = cds.env.requires.baf.credentials; // locally, bind baf before for this line to work
-        const { clientid, clientsecret, url: tokenUrl } = baf.uaa;
+        const { clientid, clientsecret, apiUrl: tokenUrl } = baf.uaa;
+        console.log(`\n\n\n token url before fetching ${JSON.stringify(tokenUrl, null, 2)} \n\n`)
         const apiUrl = baf.service_urls.agent_api_url
         this.agentId = baf.agentId;
         this.tokenFetcher = new TokenFetching(`${tokenUrl}/oauth/token`, clientid, clientsecret);
@@ -22,6 +23,9 @@ export class BAFAgentClient {
         const createChatResponse = await client.post<{ ID: string }>(`/api/v1/Agents(${this.agentId})/chats`, {
             name: taskId
         });
+
+        console.log(createChatResponse)
+        
         const chatId = createChatResponse.data.ID;
 
         // Start chat and get historyId (needed for streaming)

@@ -19,6 +19,7 @@ const { uuid } = cds.utils;
 
 export default class A2ARouterService extends cds.ApplicationService {
     private readonly log = cds.log("A2ARouterService");
+    declare on: cds.ApplicationService['on'];
 
     async init(): Promise<void> {
         this.log.info("init A2A router service");
@@ -50,14 +51,23 @@ export default class A2ARouterService extends cds.ApplicationService {
         this.log.info("Payload on Callback", payload);
         const { agentName, task }: { agentName: string; task: string } = JSON.parse(payload.toolInput);
 
-        const service = await cds.connect.to("ORDAggregator");
-        for (const entry of (await service.send("listAgentsCatalog")).catalog) {
-            if (entry.agent.name === agentName) {
-                const url = entry.agent.url;
-                const response = await triggerA2A({ url, task });
-                return { response };
-                
+        
+        try {
+            const service = await cds.connect.to("ORDAggregator");
+            // const myService = await cds.connect.to('MyService');
+            console.log('[✔] Connected to MyService:', service.name || 'OK');
+            for (const entry of (await service.send("listAgentsCatalog")).catalog) {
+                console.log("\nthe entry:\n" +  JSON.stringify(entry.agent, null, 2) + "\n\n")
+                console.log("the agent name: " +  JSON.stringify(entry.agent.name, null, 2));
+                if (entry.agent.name === agentName) {
+                    const url = entry.agent.url;
+                    const response = await triggerA2A({ url, task });
+                    return { response };
+    
+                }
             }
+        } catch (error) {
+            console.error('[✘] Failed to connect to MyService:', error.message);
         }
         // curious if the Orchestrator will provide the correct Agent name
         throw new Error("Could not find an entry in the Agents Catalog for that Agent name.");
@@ -66,6 +76,7 @@ export default class A2ARouterService extends cds.ApplicationService {
 
 const triggerA2A = async ({ url, task }: { url: string; task: string }): Promise<string> => {
     const messageId = uuid();
+    console.log("url is: " + url)
     const client = new A2AClient(url);
     let taskId: string | undefined;
 
@@ -83,6 +94,8 @@ const triggerA2A = async ({ url, task }: { url: string; task: string }): Promise
                 acceptedOutputModes: ["text/plain"]
             }
         };
+
+        console.log(`\n----------------------------------------------\nsend message params: ${JSON.stringify(sendParams, null, 2)}`)
 
         const sendResponse: SendMessageResponse = await client.sendMessage(sendParams);
         //@ts-ignore

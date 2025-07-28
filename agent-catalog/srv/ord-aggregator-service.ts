@@ -23,6 +23,7 @@ const ORDPointers = [
 ];
 
 export default class ORDAggregator extends cds.ApplicationService {
+    declare on: cds.ApplicationService['on'];
     private readonly log = cds.log("ORDAggregator");
 
     async init(): Promise<void> {
@@ -50,9 +51,10 @@ export default class ORDAggregator extends cds.ApplicationService {
                                 const agentCardUrl = `${ordPointer.host}${resourceDefinition.url}`;
                                 const agentCardRaw = await fetch(agentCardUrl)
                                 const agentCard = await agentCardRaw.json();
+                                console.log(agentCard)
                                 delete agentCard.provider;
                                 delete agentCard.authentication;
-
+                                console.log('pushing agent card!')
                                 catalog.push({
                                     ordVersion: ordSpec.openResourceDiscovery,
                                     ordDocUrl: ordDocUrl,

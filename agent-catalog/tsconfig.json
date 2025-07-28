@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./",
     "target": "ES2023",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -14,8 +16,10 @@
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "#cds-models/*": [
+        "./@cds-models/*/index.ts",
         "./@cds-models/*"
       ]
-    }
+    },
+    "checkJs": true
   }
 }

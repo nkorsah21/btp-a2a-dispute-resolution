@@ -1,43 +1,51 @@
 {
-    "name": "agent-catalog",
-    "version": "1.0.0",
-    "description": "Runs two services: ORDAggregator to list the Agents Catalog, and A2ARouter to call Agents as an A2A Client",
-    "repository": "",
-    "license": "UNLICENSED",
-    "private": true,
-    "engines": {
-        "node": "22.x.x"
-    },
-    "dependencies": {
-        "@a2a-js/sdk": "^0.2.2",
-        "@sap/cds": "^9",
-        "cors": "^2.8.5",
-        "express": "^4",
-        "zod": "^3.24.4",
-        "zod-to-json-schema": "^3.24.5"
-    },
-    "devDependencies": {
-        "ts-node": "^10.9.1",
-        "@cap-js/cds-typer": ">=0.1",
-        "@cap-js/cds-types": "^0.10.0",
-        "@types/node": "^22.0.0",
-        "prettier": "3.5.3",
-        "typescript": "^5"
-    },
-    "scripts": {
-        "start": "cds-serve",
-        "watch": "cds-tsx w --port 4005",
-        "build": "mbt build -t mta_archives --mtar agent-catalog.tar",
-        "deploy-only": "cf deploy mta_archives/agent-catalog.tar",
-        "deploy": "npm run build && npm run deploy-only"
-    },
-    "imports": {
-        "#cds-models/*": "./@cds-models/*/index.js"
-    },
-    "prettier": {
-        "singleQuote": false,
-        "trailingComma": "none",
-        "printWidth": 120,
-        "tabWidth": 4
+  "name": "agent-catalog",
+  "version": "1.0.0",
+  "description": "Runs two services: ORDAggregator to list the Agents Catalog, and A2ARouter to call Agents as an A2A Client",
+  "repository": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": "22.x.x"
+  },
+  "dependencies": {
+    "@a2a-js/sdk": "^0.2.2",
+    "@sap/cds": "^9",
+    "cors": "^2.8.5",
+    "express": "^4",
+    "zod": "^3.24.4",
+    "zod-to-json-schema": "^3.24.5"
+  },
+  "devDependencies": {
+    "@cap-js/cds-typer": ">=0.1",
+    "@cap-js/cds-types": "^0.10.0",
+    "@types/node": "^22.0.0",
+    "prettier": "3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch": "cds-tsx w --port 4005",
+    "build": "mbt build -t mta_archives --mtar agent-catalog.tar",
+    "deploy-only": "cf deploy mta_archives/agent-catalog.tar",
+    "deploy": "npm run build && npm run deploy-only"
+  },
+  "imports": {
+    "#cds-models/*": "./@cds-models/*/index.js"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "trailingComma": "none",
+    "printWidth": 120,
+    "tabWidth": 4
+  },
+  "cds":{
+    "requires": {
+      "ORDAggregator":{
+        "kind": "odata",
+        "impl": "./srv/ord-aggregator-service.ts"
+      }
     }
+  }
 }

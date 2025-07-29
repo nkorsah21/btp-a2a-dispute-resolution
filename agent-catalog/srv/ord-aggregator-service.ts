@@ -37,13 +37,15 @@ export default class ORDAggregator extends cds.ApplicationService {
 
     // TODO: add return type for Agents Catalog
     private listAgentsCatalog = async (): Promise<any> => {
+        console.log("------------listing the agents catalog!------------------")
         const catalog = [];
         for (const ordPointer of ORDPointers) {
             if (ordPointer.host) {
                 const ordDocUrl = `${ordPointer.host}${ORD_DOCUMENT_PATH}`;
-
+                console.log(`${ordDocUrl}`)
                 try {
                     const ordSpec = await (await fetch(ordDocUrl)).json();
+                    console.log(`-------------${ordDocUrl}-------------`)
                     for (const resource of ordSpec.apiResources) {
                         // find url of Agent Card
                         for (const resourceDefinition of resource.resourceDefinitions) {

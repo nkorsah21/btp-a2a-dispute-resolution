@@ -51,6 +51,8 @@ export class TokenFetching {
             }
         });
 
+        // console.log(`\n\n\n token service url ${JSON.stringify(xsuaaResponseObj.data.access_token, null, 2)} \n\n`)
+
         return {
             token: xsuaaResponseObj.data.access_token,
             expiresAt: this.getCurrentTimeInSeconds() + xsuaaResponseObj.data.expires_in
